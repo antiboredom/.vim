@@ -16,9 +16,14 @@ Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
 Plug 'airblade/vim-gitgutter'
 Plug 'henrik/vim-reveal-in-finder'
-" Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'junegunn/vim-easy-align'
 Plug 'suan/vim-instant-markdown'
 Plug 'junegunn/goyo.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-vinegar'
 
 call plug#end()
 
@@ -133,6 +138,12 @@ let g:prettier#config#trailing_comma = 'none'
 
 " gitgutter yells at me if i don't include this
 let g:gitgutter_realtime = 0
+
+" ctrlp ignore rules
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.yardoc\|node_modules\|venv\|env\|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ }
 
 
 " ================== CUSTOM KEYS =================
