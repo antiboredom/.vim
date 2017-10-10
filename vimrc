@@ -10,7 +10,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'crusoexia/vim-monokai'
 Plug 'tomtom/tcomment_vim'
-Plug 'prettier/vim-prettier'
+Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
@@ -23,7 +23,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-vinegar'
+Plug 'posva/vim-vue'
 
 call plug#end()
 
@@ -102,8 +102,8 @@ autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 
 " line wrap stuff
 
-set wrap       "Wrap lines
-set linebreak    "Wrap lines at convenient points
+set wrap      " Wrap lines
+set linebreak " Wrap lines at convenient points
 
 " ================ Scrolling ========================
 
@@ -111,9 +111,15 @@ set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
-"Always show current position
+" Always show current position
 set ruler
 set number
+
+" Highlight current line
+set cursorline
+
+" Hide scrollbars on mac
+set guioptions=
 
 " ============== netrw ====================
 " get rid of the netrw help info
@@ -135,13 +141,19 @@ set number
 " no trailing commas for prettier
 let g:prettier#config#trailing_comma = 'none'
 
+" max line length that prettier will wrap on
+g:prettier#config#print_width = 100
+
+" let prettier be async
+let g:prettier#exec_cmd_async = 1
+
 
 " gitgutter yells at me if i don't include this
 let g:gitgutter_realtime = 0
 
 " ctrlp ignore rules
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.yardoc\|node_modules\|venv\|env\|log\|tmp$',
+  \ 'dir':  '\.git$\|\.yardoc\|node_modules\|venv\|env\|log\|dist\|build\|tmp$',
   \ 'file': '\.so$\|\.dat$|\.DS_Store$'
   \ }
 
