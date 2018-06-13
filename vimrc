@@ -12,18 +12,30 @@ Plug 'crusoexia/vim-monokai'
 Plug 'tomtom/tcomment_vim'
 Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'pangloss/vim-javascript'
+" Plug 'jelera/vim-javascript-syntax'
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
 Plug 'airblade/vim-gitgutter'
 Plug 'henrik/vim-reveal-in-finder'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'junegunn/vim-easy-align'
-Plug 'suan/vim-instant-markdown'
+" " Plug 'suan/vim-instant-markdown'
 Plug 'junegunn/goyo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'posva/vim-vue'
+Plug 'sbdchd/neoformat'
+Plug 'tpope/vim-repeat'
+Plug 'valloric/matchtagalways'
+" " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" " Plug 'junegunn/fzf.vim'
+" " Plug 'w0rp/ale'
+Plug 'ambv/black'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ap/vim-css-color'
+" Plug 'FelikZ/ctrlp-py-matcher'
 
 call plug#end()
 
@@ -87,7 +99,7 @@ set noswapfile
 " ================ Indentation ======================
 
 set autoindent
-set smartindent
+" set smartindent
 set smarttab
 set shiftwidth=2
 set softtabstop=2
@@ -142,21 +154,29 @@ set guioptions=
 let g:prettier#config#trailing_comma = 'none'
 
 " max line length that prettier will wrap on
-g:prettier#config#print_width = 100
+let g:prettier#config#print_width = 100
 
 " let prettier be async
 let g:prettier#exec_cmd_async = 1
 
+" let g:prettier#config#parser = 'babylon'
 
 " gitgutter yells at me if i don't include this
-let g:gitgutter_realtime = 0
+" let g:gitgutter_realtime = 0
+set updatetime=100
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=**/node_modules
+set wildignore+=**/env
+set wildignore+=**/venv
 
 " ctrlp ignore rules
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.yardoc\|node_modules\|venv\|env\|log\|dist\|build\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ 'file': '\.so$\|\.pdf$\||\.png$\|\.jpg$\|\.gif$\|\.dat$|\.DS_Store$'
   \ }
 
+" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " ================== CUSTOM KEYS =================
 
@@ -177,13 +197,18 @@ map <Leader>c :TComment<CR>
 map <D-/> :TComment<CR>
 
 " show netrw
-map <Leader>n :e .<CR>
+" map <Leader>n :e .<CR>
+" show nerdtree
+map <Leader>n :NERDTreeToggle<CR>
 
 " reveal file in finder
 map <Leader>r :Reveal<CR>
 
-" reveal file in finder
+" use goyo
 map <Leader>g :Goyo<CR>
+
+" neoformat
+map <Leader>f :Neoformat<CR>
 
 " better keys for switching between panes
 nnoremap <C-J> <C-W><C-J>
@@ -214,3 +239,6 @@ nnoremap <silent> <expr> $ ScreenMovement("$")
 " use tab and shift-tab to cycle through buffers
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
+
+" liquidsoap
+au BufRead,BufNewFile *.liq set filetype=liquidsoap
