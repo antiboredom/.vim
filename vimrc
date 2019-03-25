@@ -26,13 +26,16 @@ Plug 'posva/vim-vue'
 Plug 'sbdchd/neoformat'
 Plug 'tpope/vim-repeat'
 Plug 'valloric/matchtagalways'
-Plug 'ambv/black'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ap/vim-css-color'
+Plug 'w0rp/ale'
+Plug 'vim-scripts/paredit.vim'
+Plug 'elixir-editors/vim-elixir'
+" Plug 'zxqfl/tabnine-vim'
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3.7 ./install.py --tern-completer --js-completer --go-completer --clang-completer' }
 
 call plug#end()
-
 
 " COLORS
 " Dark background
@@ -90,6 +93,9 @@ set nobackup
 set nowb
 set noswapfile
 
+" allow vim to switch from buffers with unsaved changes
+set hidden
+
 " ================ Indentation ======================
 
 set autoindent
@@ -144,6 +150,34 @@ set guioptions=
 
 " =============== PLUGIN SPECIFIC ==============
 
+" Don't show YCM's preview window [ I find it really annoying ]
+" set completeopt-=preview
+" let g:ycm_add_preview_to_completeopt = 0
+" let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+
+" only lint when saved
+" let g:ale_lint_on_text_changed = 'never'
+
+" virtualenv for ale
+let g:ale_virtualenv_dir_names = ['env', 'venv', '.env', '.venv', '../env', 'env2']
+
+" always show the sign gutter
+let g:ale_sign_column_always = 1
+
+let g:ale_sign_error = '>'
+let g:ale_sign_warning = '-'
+
+" line length
+let g:ale_python_flake8_options = '--max-line-length=100'
+
+" fix vim-vue slowness
+let g:vue_disable_pre_processors=1
+
 " no trailing commas for prettier
 let g:prettier#config#trailing_comma = 'none'
 
@@ -159,7 +193,7 @@ let g:prettier#exec_cmd_async = 1
 " let g:gitgutter_realtime = 0
 set updatetime=100
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.gif,*.jpeg
 set wildignore+=**/node_modules
 set wildignore+=**/env
 set wildignore+=**/venv
@@ -167,7 +201,7 @@ set wildignore+=**/venv
 " ctrlp ignore rules
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.yardoc\|node_modules\|venv\|env\|log\|dist\|build\|tmp$',
-  \ 'file': '\.so$\|\.pdf$\||\.png$\|\.jpg$\|\.gif$\|\.dat$|\.DS_Store$'
+  \ 'file': '\.so$\|\.pdf$\|\.png$\|\.jpg$\|\.gif$\|\.dat$|\.DS_Store$'
   \ }
 
 " let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
@@ -177,6 +211,9 @@ let g:ctrlp_custom_ignore = {
 " Change leader to a comma because the backslash is too far away
 " That means all \x commands turn into ,x
 let mapleader=","
+
+" toggle wrap
+map <C-S-p> :CtrlPBuffer<CR>
 
 " toggle wrap
 map <Leader>w :set wrap!<CR>
