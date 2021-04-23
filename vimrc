@@ -9,6 +9,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'crusoexia/vim-monokai'
+Plug 'phanviet/vim-monokai-pro'
 Plug 'tomtom/tcomment_vim'
 Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'pangloss/vim-javascript'
@@ -33,6 +34,12 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tikhomirov/vim-glsl'
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
@@ -41,6 +48,7 @@ call plug#end()
 set termguicolors
 set background=dark
 syntax on
+" colorscheme monokai_pro
 colorscheme monokai
 
 " Open new split panes to right and bottom
@@ -178,6 +186,9 @@ set synmaxcol=200
 " line length
 " let g:ale_python_flake8_options = '--max-line-length=100'
 
+" make supertab start at the top, not bottom:
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
 " fix vim-vue slowness
 let g:vue_disable_pre_processors=1
 
@@ -185,7 +196,7 @@ let g:vue_disable_pre_processors=1
 let g:prettier#config#trailing_comma = 'none'
 
 " max line length that prettier will wrap on
-let g:prettier#config#print_width = 80
+let g:prettier#config#print_width = 100
 
 " let prettier be async
 let g:prettier#exec_cmd_async = 1
@@ -194,7 +205,27 @@ let g:prettier#exec_cmd_async = 1
 
 " gitgutter yells at me if i don't include this
 " let g:gitgutter_realtime = 0
-set updatetime=100
+"
+" ================== SUGGESTED COC SETTINGS =======================
+
+" Give more space for displaying messages.
+set updatetime=300
+set cmdheight=2
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+" if has("patch-8.1.1564")
+"   " Recently vim can merge signcolumn and number column into one
+"   set signcolumn=number
+" else
+"   set signcolumn=yes
+" endif
+set signcolumn=yes
+
+" ================== END SUGGESTED COC SETTINGS =======================
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.gif,*.jpeg
 set wildignore+=**/node_modules
@@ -205,10 +236,21 @@ set wildignore+=**/venv
 
 " Change leader to a comma because the backslash is too far away
 " That means all \x commands turn into ,x
-let mapleader=","
+" let mapleader=","
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
+" quick save
+nnoremap <leader><leader> :w<cr>
 
 " ctrl-p to fzf gitfiles
 map <C-S-p> :GFiles<CR>
+
+" view buffers
+map <Leader>b :Buffers<CR>
+
+" view all files
+map <Leader>p :Files<CR>
 
 " toggle wrap
 map <Leader>w :set wrap!<CR>
@@ -268,3 +310,9 @@ nnoremap <S-Tab> :bprevious<CR>
 
 " liquidsoap
 au BufRead,BufNewFile *.liq set filetype=liquidsoap
+
+" add mouse support
+set mouse=a
+
+" transparent bg / good for tmux
+hi Normal guibg=NONE ctermbg=NONE
