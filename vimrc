@@ -1,4 +1,4 @@
-" Automatically install vimplug if needed
+
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -9,9 +9,9 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'crusoexia/vim-monokai'
-Plug 'phanviet/vim-monokai-pro'
+" Plug 'phanviet/vim-monokai-pro'
 Plug 'tomtom/tcomment_vim'
-Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+Plug 'prettier/vim-prettier', {'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'svelte'] }
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
@@ -25,7 +25,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'posva/vim-vue'
 Plug 'sbdchd/neoformat'
 Plug 'tpope/vim-repeat'
-Plug 'valloric/matchtagalways'
+" Plug 'valloric/matchtagalways'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ap/vim-css-color'
@@ -40,6 +40,13 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'vim-python/python-syntax'
+Plug 'mattn/emmet-vim'
+Plug 'psliwka/vim-smoothie'
+Plug 'easymotion/vim-easymotion'
+" Plug 'tanvirtin/monokai.nvim'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
 call plug#end()
 
@@ -48,8 +55,8 @@ call plug#end()
 set termguicolors
 set background=dark
 syntax on
-" colorscheme monokai_pro
 colorscheme monokai
+" colorscheme monokai_pro
 
 " Open new split panes to right and bottom
 set splitbelow
@@ -119,6 +126,9 @@ filetype indent on
 " make python files use 4 spaces rather than 2
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 
+" set up python syntax
+let g:python_highlight_all = 1
+
 " line wrap stuff
 
 set wrap      " Wrap lines
@@ -134,8 +144,11 @@ set sidescroll=1
 set ruler
 set number
 
+" show relative numbers
+set number relativenumber
+
 " Highlight current line
-" set cursorline
+set cursorline
 
 " Hide scrollbars on mac
 set guioptions=
@@ -244,7 +257,7 @@ let mapleader=" "
 nnoremap <leader><leader> :w<cr>
 
 " ctrl-p to fzf gitfiles
-map <C-S-p> :GFiles<CR>
+map <C-p> :GFiles<CR>
 
 " view buffers
 map <Leader>b :Buffers<CR>
@@ -277,6 +290,13 @@ map <Leader>g :Goyo<CR>
 
 " neoformat
 map <Leader>f :Neoformat<CR>
+
+" ctrl-c copy to system clipboard
+map <C-c> "+y
+
+" switch to last buffer
+nnoremap <leader><leader> <c-^>
+
 
 " better keys for switching between panes
 nnoremap <C-J> <C-W><C-J>
@@ -316,3 +336,19 @@ set mouse=a
 
 " transparent bg / good for tmux
 hi Normal guibg=NONE ctermbg=NONE
+
+" delete the buffer without closing the window
+" command Bd bp\|bd \#
+"
+"
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+"   highlight = {
+"     enable = true,              -- false will disable the whole extension
+"   },
+"   indent = {
+"     enable = true
+"   }
+" }
+" EOF
